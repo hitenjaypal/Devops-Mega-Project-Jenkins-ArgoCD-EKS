@@ -1,0 +1,17 @@
+# PersistentVolumeClaim - retained for reference.
+# The MongoDB PVC (mongo-pvc) has been removed. Database storage is now
+# managed entirely by AWS RDS MySQL. No in-cluster database PVC is needed.
+#
+# Example Redis PVC (uncomment to enable persistent Redis storage):
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: redis-pvc
+#   namespace: wanderlust
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   storageClassName: ""
+#   resources:
+#     requests:
+#       storage: 1Gi

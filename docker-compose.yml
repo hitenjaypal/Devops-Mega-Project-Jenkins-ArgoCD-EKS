@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  mysql:
+    container_name: mysql-service
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wanderlust
+      MYSQL_USER: wanderlust_user
+      MYSQL_PASSWORD: wanderlust_pass
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+
+  backend:
+    container_name: backend
+    build: ./backend
+    env_file:
+      - ./backend/.env.docker
+    ports:
+      - "31100:8080"
+    depends_on:
+      - mysql
+      - redis
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    env_file:
+      - ./frontend/.env.docker
+    ports:
+      - "5173:5173"
+
+  redis:
+    container_name: redis-service
+    restart: unless-stopped
+    image: redis:7.0.5-alpine
+    expose:
+      - 6379
+
+volumes:
+  mysql-data:

@@ -1,0 +1,19 @@
+# PersistentVolume - retained for Redis in-cluster caching layer.
+# The MongoDB PV has been removed. Database persistence is now handled
+# by AWS RDS MySQL (managed service). Redis uses ephemeral storage by
+# default; add a PV/PVC here only if you require Redis AOF persistence.
+#
+# Example Redis PV (uncomment to enable):
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: redis-pv
+#   namespace: wanderlust
+# spec:
+#   capacity:
+#     storage: 1Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: /data/redis
